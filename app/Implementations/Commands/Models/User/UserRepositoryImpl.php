@@ -14,8 +14,19 @@ final class UserRepositoryImpl implements UserRepository
         $dto = $this->mapToDto($user);
 
         DB::transaction(function () use ($dto) {
-            DB::table('users')->insert($dto);
+            DB::table('users')->upsert($dto, 'id');
         });
+    }
+
+    public function findById(string $userId): ?User
+    {
+        $dto = DB::table('users')->where('id', $userId)->first();
+
+        if (is_null($dto)) {
+            return null;
+        }
+
+        return $this->mapToModel($dto);
     }
 
     public function findByEmail(string $email): ?User

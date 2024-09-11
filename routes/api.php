@@ -6,6 +6,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\VerifyJwtToken;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('articles')->group(function () {
@@ -26,7 +27,7 @@ Route::prefix('articles')->group(function () {
 });
 
 Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware(VerifyJwtToken::class);
-Route::put('/user', [UserController::class, 'updateSettings']);
+Route::put('/user', [UserController::class, 'updateSettings'])->middleware(VerifyJwtToken::class);
 Route::post('/users', [UserController::class, 'registerUser']);
 Route::post('/users/login', [UserController::class, 'login']);
 

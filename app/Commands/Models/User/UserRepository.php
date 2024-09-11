@@ -11,6 +11,14 @@ interface UserRepository
     function saveUser(User $user): void;
 
     /**
+     * Find user by id.
+     * If does not exist, return null.
+     * @param string $userId user id
+     * @return User|null
+     */
+    function findById(string $userId): ?User;
+
+    /**
      * Find user by username.
      * If does not exist, return null.
      * @param string $username username

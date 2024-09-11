@@ -68,13 +68,22 @@ final class User
         );
     }
 
-    public function update(string $email, ?string $bio, ?string $image, ?string $password): void
+    public function update(array $newAttributes): void
     {
-        $this->email = $email;
-        $this->bio = $bio;
-        $this->image = $image;
-        if (isset($password)) {
-            $this->password = bcrypt($password);
+        if (array_key_exists('username', $newAttributes)) {
+            $this->username = $newAttributes['username'];
+        }
+        if (array_key_exists('email', $newAttributes)) {
+            $this->email = $newAttributes['email'];
+        }
+        if (array_key_exists('bio', $newAttributes)) {
+            $this->bio = $newAttributes['bio'];
+        }
+        if (array_key_exists('image', $newAttributes)) {
+            $this->image = $newAttributes['image'];
+        }
+        if (array_key_exists('password', $newAttributes)) {
+            $this->password = Hash::make($newAttributes['password']);
         }
         $this->updatedAt = CarbonImmutable::now();
     }

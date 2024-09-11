@@ -7,8 +7,10 @@ use App\Commands\Models\User\InvalidCredentialException;
 use App\Commands\Models\User\UsernameDuplicatedException;
 use App\Commands\Services\User\AuthenticationService;
 use App\Commands\Services\User\RegisterUserService;
+use App\Commands\Services\User\UpdateUserSettingsService;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UpdateUserSettingsRequest;
 use App\Queries\Services\UserQueryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -79,8 +81,22 @@ final class UserController extends Controller
         ]);
     }
 
-    public function updateSettings(): JsonResponse
-    {
-        return new JsonResponse();
+    public function updateSettings(
+        UpdateUserSettingsService $service,
+        UserQueryService $queryService,
+        UpdateUserSettingsRequest $request,
+    ): JsonResponse {
+        $userId = $request->user();
+        $input = $request->validated()['user'];
+        $writeModel = $service->handle($userId, $input);
+        $readModel = $queryService->getByUserId($writeModel->id);
+
+        if (is_null($readModel)) {
+            throw new RuntimeException('$readModel is unexpectedly set to null');
+        }
+
+        return new JsonResponse([
+            'user' => $readModel,
+        ]);
     }
 }
