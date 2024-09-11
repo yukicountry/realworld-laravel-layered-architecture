@@ -3,13 +3,13 @@
 namespace App\Queries\Services;
 
 use App\Queries\Models\User;
-use App\Shared\JwtGenerator;
+use App\Shared\Jwt\JwtManager;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 
 final class UserQueryService
 {
-    public function __construct(private readonly JwtGenerator $tokenGenerator) {}
+    public function __construct(private readonly JwtManager $jwtManager) {}
 
     public function getByUserId(string $userId): ?User
     {
@@ -23,7 +23,7 @@ final class UserQueryService
             $dto->id,
             $dto->username,
             $dto->email,
-            $this->tokenGenerator->generateToken($dto->id),
+            $this->jwtManager->encode($dto->id),
             $dto->bio,
             $dto->image,
             CarbonImmutable::parse($dto->created_at),

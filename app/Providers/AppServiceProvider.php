@@ -9,7 +9,7 @@ use App\Implementations\Commands\Models\User\CheckUserExistsByEmailImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByUsernameImpl;
 use App\Implementations\Commands\Models\User\UserRepositoryImpl;
 use App\Queries\Services\UserQueryService;
-use App\Shared\JwtGenerator;
+use App\Shared\Jwt\JwtManager;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,11 +29,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CheckUserExistsByUsername::class, function () {
             return new CheckUserExistsByUsernameImpl();
         });
-        $this->app->singleton(JwtGenerator::class, function (Application $app) {
-            return new JwtGenerator($app['config']['app.key']);
+        $this->app->singleton(JwtManager::class, function (Application $app) {
+            return new JwtManager($app['config']['app.key']);
         });
         $this->app->singleton(UserQueryService::class, function (Application $app) {
-            return new UserQueryService($app->make(JwtGenerator::class));
+            return new UserQueryService($app->make(JwtManager::class));
         });
     }
 
