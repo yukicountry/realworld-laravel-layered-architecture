@@ -11,7 +11,9 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Queries\Services\UserQueryService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
@@ -61,9 +63,20 @@ final class UserController extends Controller
         }
     }
 
-    public function getCurrentUser(): JsonResponse
-    {
-        return new JsonResponse();
+    public function getCurrentUser(
+        Request $request,
+        UserQueryService $queryService,
+    ): JsonResponse {
+        $userId = $request->user();
+        $readModel = $queryService->getByUserId($userId);
+
+        if (is_null($readModel)) {
+            throw new NotFoundHttpException();
+        }
+
+        return new JsonResponse([
+            'user' => $readModel,
+        ]);
     }
 
     public function updateSettings(): JsonResponse

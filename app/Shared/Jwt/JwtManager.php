@@ -24,8 +24,8 @@ final class JwtManager
     {
         $decoded = (array) JWT::decode($jwt, new Key($this->appKey, 'HS256'));
 
-        if (!in_array('user_id', $decoded, strict: true)) {
-            throw new InvalidJwtException("invalid jwt\n{$jwt}");
+        if (!array_key_exists('user_id', $decoded)) {
+            throw new InvalidJwtException("invalid jwt {$jwt}");
         }
 
         return $decoded['user_id'];
