@@ -3,7 +3,7 @@ FROM php:8.3-fpm
 SHELL ["/bin/bash", "-oeux", "pipefail", "-c"]
 
 RUN apt update && \
-    apt install -y libpq-dev && \
+    apt install -y libpq-dev zip unzip && \
     cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     echo "Asia/Tokyo" > /etc/timezone && \
     docker-php-ext-install bcmath pdo_pgsql
