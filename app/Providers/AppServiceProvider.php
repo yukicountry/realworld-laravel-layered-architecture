@@ -4,11 +4,15 @@ namespace App\Providers;
 
 use App\Commands\Models\Article\ArticleRepository;
 use App\Commands\Models\Article\CheckAuthorExists;
+use App\Commands\Models\Comment\CheckAuthorExists as CommentCheckAuthorExists;
+use App\Commands\Models\Comment\CommentRepository;
 use App\Commands\Models\User\CheckUserExistsByEmail;
 use App\Commands\Models\User\CheckUserExistsByUsername;
 use App\Commands\Models\User\UserRepository;
 use App\Implementations\Commands\Models\Article\ArticleRepositoryImpl;
 use App\Implementations\Commands\Models\Article\CheckAuthorExistsImpl;
+use App\Implementations\Commands\Models\Comment\CheckAuthorExistsImpl as CommentCheckAuthorExistsImpl;
+use App\Implementations\Commands\Models\Comment\CommentRepositoryImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByEmailImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByUsernameImpl;
 use App\Implementations\Commands\Models\User\UserRepositoryImpl;
@@ -40,6 +44,12 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(CheckAuthorExists::class, function () {
             return new CheckAuthorExistsImpl();
+        });
+        $this->app->singleton(CommentRepository::class, function () {
+            return new CommentRepositoryImpl();
+        });
+        $this->app->singleton(CommentCheckAuthorExists::class, function () {
+            return new CommentCheckAuthorExistsImpl();
         });
     }
 

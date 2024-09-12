@@ -21,7 +21,7 @@ Route::prefix('articles')->group(function () {
     Route::delete('{slug}/favorite', [FavoriteController::class, 'unfavorite']);
     Route::prefix('{slug}/comments')->group(function () {
         Route::get('', [CommentController::class, 'getComments']);
-        Route::post('', [CommentController::class, 'postComment']);
+        Route::post('', [CommentController::class, 'postComment'])->middleware(VerifyJwtToken::class);
         Route::delete('{commentId}', [CommentController::class, 'deleteComment']);
     });
 });
