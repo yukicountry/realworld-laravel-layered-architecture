@@ -188,4 +188,14 @@ final class ArticleQueryService
 
         return $this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset);
     }
+
+    public function getAllTags(): array
+    {
+        return DB::table('tags')
+            ->select(['name'])
+            ->distinct()
+            ->orderBy('name')
+            ->pluck('name')
+            ->toArray();
+    }
 }

@@ -26,6 +26,8 @@ Route::prefix('articles')->group(function () {
     });
 });
 
+Route::get('tags', [ArticleController::class, 'getTags']);
+
 Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware(VerifyJwtToken::class);
 Route::put('/user', [UserController::class, 'updateSettings'])->middleware(VerifyJwtToken::class);
 Route::post('/users', [UserController::class, 'registerUser']);

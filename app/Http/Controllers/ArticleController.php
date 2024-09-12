@@ -110,8 +110,8 @@ final class ArticleController extends Controller
         return new JsonResponse([]);
     }
 
-    public function getTags(): JsonResponse
+    public function getTags(ArticleQueryService $queryService): JsonResponse
     {
-        return new JsonResponse();
+        return new JsonResponse(['tags' => $queryService->getAllTags()]);
     }
 }
