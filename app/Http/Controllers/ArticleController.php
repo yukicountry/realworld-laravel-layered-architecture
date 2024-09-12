@@ -6,7 +6,8 @@ use App\Commands\Models\Article\ArticleNotFoundException;
 use App\Commands\Services\Article\DeleteArticleService;
 use App\Commands\Services\Article\PostArticleService;
 use App\Commands\Services\Article\UpdateArticleService;
-use App\Http\Requests\GetArticleListRequest;
+use App\Http\Requests\FeedArticlesRequest;
+use App\Http\Requests\ListArticlesRequest;
 use App\Http\Requests\PostArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Queries\Services\ArticleQueryService;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ArticleController extends Controller
 {
-    public function getArticleList(ArticleQueryService $queryService, GetArticleListRequest $request): JsonResponse
+    public function listArticles(ArticleQueryService $queryService, ListArticlesRequest $request): JsonResponse
     {
         $articles = $queryService->searchArticles(
             null, // TODO: authentication
@@ -33,9 +34,17 @@ final class ArticleController extends Controller
         ]);
     }
 
-    public function feedArticles(): JsonResponse
+    public function feedArticles(ArticleQueryService $queryService, FeedArticlesRequest $request): JsonResponse
     {
-        return new JsonResponse();
+        $articles = $queryService->feedArticles(
+            $request->user(),
+            limit: is_null($request->has('limit')) ? intval($request->query('limit')) : 20,
+            offset: is_null($request->has('offset')) ? intval($request->query('offset')) : 0,
+        );
+
+        return new JsonResponse([
+            'articles' => $articles,
+        ]);
     }
 
     public function getSingleArticle(

@@ -15,7 +15,7 @@ final class ArticleQueryService
 {
     public function __construct(private readonly ProfileQueryService $profileQueryService) {}
 
-    public function getSingleArticle(string $slug, string $currentUserId): ?SingleArticle
+    public function getSingleArticle(string $slug, ?string $currentUserId): ?SingleArticle
     {
         $articleDto = DB::table('vw_articles')
             ->select([
@@ -68,7 +68,7 @@ final class ArticleQueryService
 
     public function getArticleListBySlugs(
         array $slugs,
-        ?string $currentUserId = null,
+        ?string $currentUserId,
         int $limit = 20,
         int $offset = 0,
     ): array {
@@ -135,7 +135,7 @@ final class ArticleQueryService
     }
 
     public function searchArticles(
-        ?string $currentUserId = null,
+        ?string $currentUserId,
         ?string $tag = null,
         ?string $authorUsername = null,
         ?string $favoritedUsername = null,
@@ -162,6 +162,27 @@ final class ArticleQueryService
                         ->where('tags.name', '=', $tag);
                 });
             })
+            ->orderBy('slug')
+            ->pluck('slug')
+            ->toArray();
+
+        return $this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset);
+    }
+
+    public function feedArticles(
+        string $currentUserId,
+        int $limit = 20,
+        int $offset = 0,
+    ): array {
+        $slugs = DB::table('vw_articles')
+            ->select(['vw_articles.slug'])
+            ->distinct()
+            ->join('follows', function (JoinClause $join) use ($currentUserId) {
+                $join
+                    ->on('vw_articles.author_id', '=', 'follows.followee_id')
+                    ->where('follows.follower_id', $currentUserId);
+            })
+            ->orderBy('slug')
             ->pluck('slug')
             ->toArray();
 
