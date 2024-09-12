@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\Services\Comment\DeleteCommentService;
 use App\Commands\Services\Comment\PostCommentService;
 use App\Http\Requests\PostCommentRequest;
 use App\Queries\Services\CommentQueryService;
@@ -11,7 +12,7 @@ use RuntimeException;
 
 final class CommentController extends Controller
 {
-    public function getComments(CommentQueryService $queryService, string $slug, Request $request): JsonResponse
+    public function getComments(CommentQueryService $queryService, Request $request, string $slug): JsonResponse
     {
         $comments = $queryService->getCommentsOfArticle($slug, $request->user());
         return new JsonResponse([
@@ -22,8 +23,8 @@ final class CommentController extends Controller
     public function postComment(
         PostCommentService $service,
         CommentQueryService $queryService,
+        PostCommentRequest $request,
         string $slug,
-        PostCommentRequest $request
     ): JsonResponse {
         $input = $request->validated('comment');
         $currentUserId = $request->user();

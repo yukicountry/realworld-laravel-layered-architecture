@@ -83,8 +83,8 @@ final class ArticleController extends Controller
     public function updateArticle(
         UpdateArticleService $service,
         ArticleQueryService $queryService,
-        string $slug,
         UpdateArticleRequest $request,
+        string $slug,
     ): JsonResponse {
         $input = $request->validated('article');
 
