@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->string('slug');
             $table->string('name');
+            $table->integer('sort');
             $table->foreign('slug')->references('slug')->on('articles')->cascadeOnUpdate()->restrictOnDelete();
         });
     }

@@ -27,7 +27,7 @@ final class UserController extends Controller
         RegisterUserRequest $request,
     ): JsonResponse {
         try {
-            $input = $request->validated()['user'];
+            $input = $request->validated('user');
             $writeModel = $service->handle($input);
             $readModel = $queryService->getByUserId($writeModel->id);
 
@@ -49,7 +49,7 @@ final class UserController extends Controller
         LoginRequest $request,
     ): JsonResponse {
         try {
-            $input = $request->validated()['user'];
+            $input = $request->validated('user');
             $writeModel = $service->handle($input['email'], $input['password']);
             $readModel = $queryService->getByUserId($writeModel->id);
 
@@ -87,7 +87,7 @@ final class UserController extends Controller
         UpdateUserSettingsRequest $request,
     ): JsonResponse {
         $userId = $request->user();
-        $input = $request->validated()['user'];
+        $input = $request->validated('user');
         $writeModel = $service->handle($userId, $input);
         $readModel = $queryService->getByUserId($writeModel->id);
 

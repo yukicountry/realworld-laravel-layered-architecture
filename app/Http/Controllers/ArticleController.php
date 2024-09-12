@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\Services\Article\PostArticleService;
+use App\Http\Requests\PostArticleRequest;
+use App\Queries\Services\ArticleQueryService;
 use Illuminate\Http\JsonResponse;
+use RuntimeException;
 
-class ArticleController extends Controller
+final class ArticleController extends Controller
 {
     public function getArticles(): JsonResponse
     {
@@ -21,9 +25,22 @@ class ArticleController extends Controller
         return new JsonResponse();
     }
 
-    public function postArticle(): JsonResponse
-    {
-        return new JsonResponse();
+    public function postArticle(
+        PostArticleService $service,
+        ArticleQueryService $queryService,
+        PostArticleRequest $request,
+    ): JsonResponse {
+        $input = $request->validated('article');
+        $writeModel = $service->handle($request->user(), $input);
+        $readModel = $queryService->getSingleArticle($writeModel->slug, $request->user());
+
+        if (is_null($readModel)) {
+            throw new RuntimeException(sprintf('$readModel is unexpectedly set to null'));
+        }
+
+        return new JsonResponse([
+            'article' => $readModel,
+        ]);
     }
 
     public function updateArticle(): JsonResponse

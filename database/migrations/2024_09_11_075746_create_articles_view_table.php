@@ -15,10 +15,10 @@ return new class extends Migration
             CREATE VIEW vw_articles AS
             SELECT
                 articles.*,
-                vw_favorites_count.count AS favorites_count
+                COALESCE(vw_favorites_count.count, 0) AS favorites_count
             FROM
                 articles
-            JOIN
+            LEFT JOIN
                 vw_favorites_count ON articles.slug = vw_favorites_count.slug;
         EOT;
 
@@ -30,6 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vw_articles');
+        $sql = <<<EOT
+            DROP VIEW IF EXISTS vw_articles;
+        EOT;
+
+        DB::statement($sql);
     }
 };

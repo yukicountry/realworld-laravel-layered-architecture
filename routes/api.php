@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('articles')->group(function () {
     Route::get('', [ArticleController::class, 'getArticles']);
-    Route::post('', [ArticleController::class, 'postArticle']);
+    Route::post('', [ArticleController::class, 'postArticle'])->middleware(VerifyJwtToken::class);
     Route::get('feed', [ArticleController::class, 'feedArticles']);
     Route::get('tags', [ArticleController::class, 'getTags']);
     Route::get('{slug}', [ArticleController::class, 'getArticle']);

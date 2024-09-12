@@ -17,7 +17,7 @@ return new class extends Migration
                 slug,
                 COUNT(slug) AS count
             FROM
-                articles
+                favorites
             GROUP BY
                 slug
         EOT;
@@ -30,6 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vw_favorites_count');
+        $sql = <<<EOT
+            DROP VIEW IF EXISTS vw_favorites_count;
+        EOT;
+
+        DB::statement($sql);
     }
 };
