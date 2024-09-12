@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commands\Services\Article\PostArticleService;
+use App\Http\Requests\GetArticleListRequest;
 use App\Http\Requests\PostArticleRequest;
 use App\Queries\Services\ArticleQueryService;
 use Illuminate\Http\JsonResponse;
@@ -12,9 +13,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ArticleController extends Controller
 {
-    public function getArticles(): JsonResponse
+    public function getArticleList(ArticleQueryService $queryService, GetArticleListRequest $request): JsonResponse
     {
-        return new JsonResponse();
+        $articles = $queryService->searchArticles(
+            null, // TODO: authentication
+            tag: $request->query('tag'),
+            authorUsername: $request->query('author'),
+            favoritedUsername: $request->query('favorited'),
+            limit: is_null($request->has('limit')) ? intval($request->query('limit')) : 20,
+            offset: is_null($request->has('offset')) ? intval($request->query('offset')) : 0,
+        );
+
+        return new JsonResponse([
+            'articles' => $articles,
+        ]);
     }
 
     public function feedArticles(): JsonResponse

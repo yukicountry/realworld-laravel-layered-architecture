@@ -10,7 +10,7 @@ use App\Http\Middleware\VerifyJwtToken;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('articles')->group(function () {
-    Route::get('', [ArticleController::class, 'getArticles']);
+    Route::get('', [ArticleController::class, 'getArticleList']);
     Route::post('', [ArticleController::class, 'postArticle'])->middleware(VerifyJwtToken::class);
     Route::get('feed', [ArticleController::class, 'feedArticles']);
     Route::get('tags', [ArticleController::class, 'getTags']);

@@ -15,9 +15,12 @@ return new class extends Migration
             CREATE VIEW vw_articles AS
             SELECT
                 articles.*,
-                COALESCE(vw_favorites_count.count, 0) AS favorites_count
+                COALESCE(vw_favorites_count.count, 0) AS favorites_count,
+                users.username AS author_username
             FROM
                 articles
+            JOIN
+                users ON articles.author_id = users.id
             LEFT JOIN
                 vw_favorites_count ON articles.slug = vw_favorites_count.slug;
         EOT;
