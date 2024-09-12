@@ -20,7 +20,7 @@ Route::prefix('articles')->group(function () {
     Route::post('{slug}/favorite', [FavoriteController::class, 'makeFavorite']);
     Route::delete('{slug}/favorite', [FavoriteController::class, 'unfavorite']);
     Route::prefix('{slug}/comments')->group(function () {
-        Route::get('', [CommentController::class, 'getComments']);
+        Route::get('', [CommentController::class, 'getComments'])->middleware(VerifyJwtToken::class);
         Route::post('', [CommentController::class, 'postComment'])->middleware(VerifyJwtToken::class);
         Route::delete('{commentId}', [CommentController::class, 'deleteComment']);
     });

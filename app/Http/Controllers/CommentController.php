@@ -6,13 +6,17 @@ use App\Commands\Services\Comment\PostCommentService;
 use App\Http\Requests\PostCommentRequest;
 use App\Queries\Services\CommentQueryService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use RuntimeException;
 
 final class CommentController extends Controller
 {
-    public function getComments(): JsonResponse
+    public function getComments(CommentQueryService $queryService, string $slug, Request $request): JsonResponse
     {
-        return new JsonResponse();
+        $comments = $queryService->getCommentsOfArticle($slug, $request->user());
+        return new JsonResponse([
+            'comments' => $comments,
+        ]);
     }
 
     public function postComment(
