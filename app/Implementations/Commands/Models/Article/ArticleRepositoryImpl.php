@@ -74,4 +74,12 @@ final class ArticleRepositoryImpl implements ArticleRepository
             $articleDto->author_id,
         );
     }
+
+    public function delete(string $slug): void
+    {
+        DB::transaction(function () use ($slug) {
+            DB::table('tags')->where('slug', $slug)->delete();
+            DB::table('articles')->where('slug', $slug)->delete();
+        });
+    }
 }

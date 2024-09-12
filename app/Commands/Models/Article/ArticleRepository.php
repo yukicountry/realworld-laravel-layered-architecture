@@ -7,4 +7,6 @@ interface ArticleRepository
     function saveArticle(Article $article): void;
 
     function findArticleBySlug(string $slug): ?Article;
+
+    function delete(string $slug): void;
 }

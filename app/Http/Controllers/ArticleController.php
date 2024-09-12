@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Commands\Models\Article\ArticleNotFoundException;
+use App\Commands\Services\Article\DeleteArticleService;
 use App\Commands\Services\Article\PostArticleService;
 use App\Commands\Services\Article\UpdateArticleService;
 use App\Http\Requests\GetArticleListRequest;
@@ -94,9 +95,10 @@ final class ArticleController extends Controller
         ]);
     }
 
-    public function deleteArticle(): JsonResponse
+    public function deleteArticle(DeleteArticleService $service, string $slug): JsonResponse
     {
-        return new JsonResponse();
+        $service->handle($slug);
+        return new JsonResponse([]);
     }
 
     public function getTags(): JsonResponse
