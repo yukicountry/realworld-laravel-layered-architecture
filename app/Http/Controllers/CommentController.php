@@ -39,8 +39,9 @@ final class CommentController extends Controller
         ]);
     }
 
-    public function deleteComment(): JsonResponse
+    public function deleteComment(DeleteCommentService $service, string $slug, string $id): JsonResponse
     {
-        return new JsonResponse();
+        $service->handle($id);
+        return new JsonResponse([]);
     }
 }

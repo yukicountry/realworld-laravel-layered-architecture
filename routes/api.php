@@ -22,7 +22,7 @@ Route::prefix('articles')->group(function () {
     Route::prefix('{slug}/comments')->group(function () {
         Route::get('', [CommentController::class, 'getComments'])->middleware(VerifyJwtToken::class);
         Route::post('', [CommentController::class, 'postComment'])->middleware(VerifyJwtToken::class);
-        Route::delete('{commentId}', [CommentController::class, 'deleteComment']);
+        Route::delete('{commentId}', [CommentController::class, 'deleteComment'])->middleware(VerifyJwtToken::class);
     });
 });
 

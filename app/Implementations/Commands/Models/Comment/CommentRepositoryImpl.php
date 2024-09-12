@@ -17,7 +17,7 @@ final class CommentRepositoryImpl implements CommentRepository
 
     public function deleteComments(array $ids): void
     {
-        //
+        DB::table('comments')->whereIn('id', $ids)->delete();
     }
 
     private function mapToDto(Comment $model): array
