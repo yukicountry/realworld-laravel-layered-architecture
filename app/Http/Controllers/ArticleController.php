@@ -6,7 +6,9 @@ use App\Commands\Services\Article\PostArticleService;
 use App\Http\Requests\PostArticleRequest;
 use App\Queries\Services\ArticleQueryService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class ArticleController extends Controller
 {
@@ -20,9 +22,19 @@ final class ArticleController extends Controller
         return new JsonResponse();
     }
 
-    public function getArticle(): JsonResponse
-    {
-        return new JsonResponse();
+    public function getSingleArticle(
+        Request $request,
+        string $slug,
+        ArticleQueryService $queryService,
+    ): JsonResponse {
+        $readModel = $queryService->getSingleArticle($slug, $request->user());
+
+        if (is_null($readModel)) {
+            throw new NotFoundHttpException("article not found");
+        }
+        return new JsonResponse([
+            'article' => $readModel,
+        ]);
     }
 
     public function postArticle(

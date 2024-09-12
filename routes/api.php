@@ -14,7 +14,7 @@ Route::prefix('articles')->group(function () {
     Route::post('', [ArticleController::class, 'postArticle'])->middleware(VerifyJwtToken::class);
     Route::get('feed', [ArticleController::class, 'feedArticles']);
     Route::get('tags', [ArticleController::class, 'getTags']);
-    Route::get('{slug}', [ArticleController::class, 'getArticle']);
+    Route::get('{slug}', [ArticleController::class, 'getSingleArticle'])->middleware(VerifyJwtToken::class);
     Route::put('{slug}', [ArticleController::class, 'updateArticle']);
     Route::delete('{slug}', [ArticleController::class, 'deleteArticle']);
     Route::post('{slug}/favorite', [FavoriteController::class, 'makeFavorite']);
