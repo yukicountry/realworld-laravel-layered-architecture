@@ -63,4 +63,21 @@ final class Article
             $authorId,
         );
     }
+
+    public function update(array $newAttributes): void
+    {
+        if (array_key_exists('title', $newAttributes)) {
+            $this->title = $newAttributes['title'];
+        }
+        if (array_key_exists('description', $newAttributes)) {
+            $this->description = $newAttributes['description'];
+        }
+        if (array_key_exists('body', $newAttributes)) {
+            $this->body = $newAttributes['body'];
+        }
+        if (array_key_exists('tagList', $newAttributes)) {
+            $this->tagList = $newAttributes['tagList'];
+        }
+        $this->updatedAt = CarbonImmutable::now();
+    }
 }

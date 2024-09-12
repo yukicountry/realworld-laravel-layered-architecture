@@ -69,8 +69,8 @@ final class ArticleRepositoryImpl implements ArticleRepository
             $articleDto->description,
             $articleDto->body,
             $tags,
-            CarbonImmutable::parse($articleDto->createdAt),
-            CarbonImmutable::parse($articleDto->updatedAt),
+            CarbonImmutable::parse($articleDto->created_at),
+            CarbonImmutable::parse($articleDto->updated_at),
             $articleDto->author_id,
         );
     }

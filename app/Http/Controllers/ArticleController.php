@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\Models\Article\ArticleNotFoundException;
 use App\Commands\Services\Article\PostArticleService;
+use App\Commands\Services\Article\UpdateArticleService;
 use App\Http\Requests\GetArticleListRequest;
 use App\Http\Requests\PostArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Queries\Services\ArticleQueryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -67,9 +70,28 @@ final class ArticleController extends Controller
         ]);
     }
 
-    public function updateArticle(): JsonResponse
-    {
-        return new JsonResponse();
+    public function updateArticle(
+        UpdateArticleService $service,
+        ArticleQueryService $queryService,
+        string $slug,
+        UpdateArticleRequest $request,
+    ): JsonResponse {
+        $input = $request->validated('article');
+
+        try {
+            $service->handle($slug, $input);
+        } catch (ArticleNotFoundException $ex) {
+            throw new NotFoundHttpException($ex->getMessage());
+        }
+
+        $readModel = $queryService->getSingleArticle($slug, $request->user());
+        if (is_null($readModel)) {
+            throw new RuntimeException(sprintf('$readModel is unexpectedly set to null'));
+        }
+
+        return new JsonResponse([
+            'article' => $readModel,
+        ]);
     }
 
     public function deleteArticle(): JsonResponse
