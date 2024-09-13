@@ -15,8 +15,8 @@ Route::prefix('articles')->group(function () {
     Route::post('', [ArticleController::class, 'postArticle'])->middleware(AuthenticateAndGuard::class);
     Route::get('feed', [ArticleController::class, 'feedArticles'])->middleware(AuthenticateAndGuard::class);
     Route::get('{slug}', [ArticleController::class, 'getSingleArticle'])->middleware(Authenticate::class);
-    Route::put('{slug}', [ArticleController::class, 'updateArticle'])->middleware(AuthenticateAndGuard::class);
-    Route::delete('{slug}', [ArticleController::class, 'deleteArticle'])->middleware(AuthenticateAndGuard::class);
+    Route::put('{slug}', [ArticleController::class, 'updateArticle'])->middleware([AuthenticateAndGuard::class, 'checkPolicy:canUpdateArticle']);
+    Route::delete('{slug}', [ArticleController::class, 'deleteArticle'])->middleware([AuthenticateAndGuard::class, 'checkPolicy:canDeleteArticle']);
 
     Route::post('{slug}/favorite', [FavoriteController::class, 'makeFavorite'])->middleware(AuthenticateAndGuard::class);
     Route::delete('{slug}/favorite', [FavoriteController::class, 'unfavorite'])->middleware(AuthenticateAndGuard::class);
@@ -24,7 +24,7 @@ Route::prefix('articles')->group(function () {
     Route::prefix('{slug}/comments')->group(function () {
         Route::get('', [CommentController::class, 'getComments'])->middleware(Authenticate::class);
         Route::post('', [CommentController::class, 'postComment'])->middleware(AuthenticateAndGuard::class);
-        Route::delete('{commentId}', [CommentController::class, 'deleteComment'])->middleware(AuthenticateAndGuard::class);
+        Route::delete('{commentId}', [CommentController::class, 'deleteComment'])->middleware([AuthenticateAndGuard::class, 'checkPolicy:canDeleteComment']);
     });
 });
 
