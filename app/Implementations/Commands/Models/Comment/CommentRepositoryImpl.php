@@ -15,11 +15,6 @@ final class CommentRepositoryImpl implements CommentRepository
         DB::table('comments')->upsert($dto, 'id');
     }
 
-    public function deleteComments(array $ids): void
-    {
-        DB::table('comments')->whereIn('id', $ids)->delete();
-    }
-
     private function mapToDto(Comment $model): array
     {
         return [
@@ -30,5 +25,15 @@ final class CommentRepositoryImpl implements CommentRepository
             'slug' => $model->slug,
             'author_id' => $model->authorId,
         ];
+    }
+
+    public function deleteComments(array $ids): void
+    {
+        DB::table('comments')->whereIn('id', $ids)->delete();
+    }
+
+    public function deleteCommentsOfArticle(string $slug): void
+    {
+        DB::table('comments')->where('slug', $slug)->delete();
     }
 }
