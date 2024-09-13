@@ -36,7 +36,7 @@ final class Article
             Uuid::uuid7()->toString(),
             $title,
             $description,
-            $body,
+            htmlspecialchars($body),
             $tagList,
             CarbonImmutable::now(),
             CarbonImmutable::now(),
@@ -75,7 +75,7 @@ final class Article
             $this->description = $newAttributes['description'];
         }
         if (array_key_exists('body', $newAttributes)) {
-            $this->body = $newAttributes['body'];
+            $this->body = htmlspecialchars($newAttributes['body']);
         }
         if (array_key_exists('tagList', $newAttributes)) {
             $this->tagList = $newAttributes['tagList'];
