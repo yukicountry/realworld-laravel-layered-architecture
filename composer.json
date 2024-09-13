@@ -1,10 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "yukicountry/realworld-backend",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Backend api for realworld application.",
     "keywords": [
         "laravel",
-        "framework"
+        "realworld",
+        "conduit"
     ],
     "license": "MIT",
     "require": {
