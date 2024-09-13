@@ -9,15 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 final class CheckUserExistsImpl implements CheckUserExists
 {
-    public function checkById(string $userId): bool
+    public function handle(string $userId): bool
     {
         return DB::table('users')->where('id', $userId)->exists();
-    }
-
-    public function getUserIdByUsername(string $username): ?string
-    {
-        $dto = DB::table('users')->where('username', $username)->first(['id']);
-
-        return $dto?->id;
     }
 }

@@ -7,20 +7,22 @@ namespace App\Commands\Services\Follow;
 use App\Commands\Models\Follow\CheckUserExists;
 use App\Commands\Models\Follow\Follow;
 use App\Commands\Models\Follow\FollowRepository;
+use App\Commands\Models\Follow\UserNotFoundException;
 
-final class MakeFollowService
+final class UnfollowService
 {
     public function __construct(
         private readonly FollowRepository $followRepository,
         private readonly CheckUserExists $checkUserExists,
     ) {}
 
-    public function handle(string $followerId, string $followeeId): Follow
+    /**
+     * @throws UserNotFoundException
+     */
+    public function handle(string $followerId, string $followeeId): void
     {
-        $follow = Follow::makeFollow($this->checkUserExists, $followerId, $followeeId);
+        Follow::checkForDelete($this->checkUserExists, $followerId, $followeeId);
 
-        $this->followRepository->save($follow);
-
-        return $follow;
+        $this->followRepository->delete($followerId, $followeeId);
     }
 }

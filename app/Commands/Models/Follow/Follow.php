@@ -11,17 +11,33 @@ final class Follow
     public static function makeFollow(
         CheckUserExists $checkUserExists,
         string $followerId,
-        string $followeeUsername,
+        string $followeeId,
     ): Follow {
-        if (!$checkUserExists->checkById($followerId)) {
+        if (!$checkUserExists->handle($followerId)) {
             throw new UserNotFoundException("User {$followerId} could not be found.");
         }
 
-        $followeeId = $checkUserExists->getUserIdByUsername($followeeUsername);
-        if (is_null($followeeId)) {
-            throw new UserNotFoundException("User (username: {$followeeUsername}) could not be found.");
+        if (!$checkUserExists->handle($followeeId)) {
+            throw new UserNotFoundException("User {$followeeId} could not be found.");
         }
 
         return new Follow($followerId, $followeeId);
+    }
+
+    /**
+     * @throws UserNotFoundException
+     */
+    public static function checkForDelete(
+        CheckUserExists $checkUserExists,
+        string $followerId,
+        string $followeeId,
+    ): void {
+        if (!$checkUserExists->handle($followerId)) {
+            throw new UserNotFoundException("User {$followerId} could not be found.");
+        }
+
+        if (!$checkUserExists->handle($followeeId)) {
+            throw new UserNotFoundException("User {$followeeId} could not be found.");
+        }
     }
 }

@@ -30,4 +30,10 @@ final class UserQueryService
             CarbonImmutable::parse($dto->updated_at),
         );
     }
+
+    public function getUserIdFromUsername(string $username): ?string
+    {
+        $dto = DB::table('users')->where('username', $username)->first(['id']);
+        return $dto?->id;
+    }
 }

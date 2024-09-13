@@ -6,7 +6,5 @@ namespace App\Commands\Models\Follow;
 
 interface CheckUserExists
 {
-    function checkById(string $userId): bool;
-
-    function getUserIdByUsername(string $username): ?string;
+    function handle(string $userId): bool;
 }
