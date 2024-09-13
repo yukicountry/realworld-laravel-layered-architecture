@@ -6,6 +6,9 @@ use App\Commands\Models\Article\ArticleRepository;
 use App\Commands\Models\Article\CheckAuthorExists;
 use App\Commands\Models\Comment\CheckAuthorExists as CommentCheckAuthorExists;
 use App\Commands\Models\Comment\CommentRepository;
+use App\Commands\Models\Favorite\CheckArticleExists;
+use App\Commands\Models\Favorite\CheckUserExists;
+use App\Commands\Models\Favorite\FavoriteRepository;
 use App\Commands\Models\User\CheckUserExistsByEmail;
 use App\Commands\Models\User\CheckUserExistsByUsername;
 use App\Commands\Models\User\UserRepository;
@@ -13,6 +16,9 @@ use App\Implementations\Commands\Models\Article\ArticleRepositoryImpl;
 use App\Implementations\Commands\Models\Article\CheckAuthorExistsImpl;
 use App\Implementations\Commands\Models\Comment\CheckAuthorExistsImpl as CommentCheckAuthorExistsImpl;
 use App\Implementations\Commands\Models\Comment\CommentRepositoryImpl;
+use App\Implementations\Commands\Models\Favorite\CheckArticleExistsImpl;
+use App\Implementations\Commands\Models\Favorite\CheckUserExistsImpl;
+use App\Implementations\Commands\Models\Favorite\FavoriteRepositoryImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByEmailImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByUsernameImpl;
 use App\Implementations\Commands\Models\User\UserRepositoryImpl;
@@ -50,6 +56,15 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->singleton(CommentCheckAuthorExists::class, function () {
             return new CommentCheckAuthorExistsImpl();
+        });
+        $this->app->singleton(FavoriteRepository::class, function () {
+            return new FavoriteRepositoryImpl();
+        });
+        $this->app->singleton(CheckUserExists::class, function () {
+            return new CheckUserExistsImpl();
+        });
+        $this->app->singleton(CheckArticleExists::class, function () {
+            return new CheckArticleExistsImpl();
         });
     }
 
