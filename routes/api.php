@@ -35,6 +35,6 @@ Route::post('/users/login', [UserController::class, 'login']);
 
 Route::prefix('profiles')->group(function () {
     Route::get('/{username}', [ProfileController::class, 'getProfile']);
-    Route::post('/{username}/follow', [FollowController::class, 'makeFollow']);
-    Route::delete('/{username}/follow', [FollowController::class, 'unfollow']);
+    Route::post('/{username}/follow', [FollowController::class, 'makeFollow'])->middleware(VerifyJwtToken::class);
+    Route::delete('/{username}/follow', [FollowController::class, 'unfollow'])->middleware(VerifyJwtToken::class);
 });
