@@ -18,7 +18,7 @@ Route::prefix('articles')->group(function () {
     Route::put('{slug}', [ArticleController::class, 'updateArticle'])->middleware(VerifyJwtToken::class);
     Route::delete('{slug}', [ArticleController::class, 'deleteArticle'])->middleware(VerifyJwtToken::class);
     Route::post('{slug}/favorite', [FavoriteController::class, 'makeFavorite'])->middleware(VerifyJwtToken::class);
-    Route::delete('{slug}/favorite', [FavoriteController::class, 'unfavorite']);
+    Route::delete('{slug}/favorite', [FavoriteController::class, 'unfavorite'])->middleware(VerifyJwtToken::class);
     Route::prefix('{slug}/comments')->group(function () {
         Route::get('', [CommentController::class, 'getComments'])->middleware(VerifyJwtToken::class);
         Route::post('', [CommentController::class, 'postComment'])->middleware(VerifyJwtToken::class);
