@@ -7,15 +7,17 @@ namespace App\Shared\Jwt;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-final class JwtManager
+final class JwtEncoder
 {
     public function __construct(
         private readonly string $appKey,
+        private readonly int $secondsUntilExpires = 3600,
     ) {}
 
     public function encode(string $userId): string
     {
         $payload = [
+            'exp'     => time() + $this->secondsUntilExpires,
             'user_id' => $userId,
         ];
 

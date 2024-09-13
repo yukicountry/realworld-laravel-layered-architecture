@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Queries\Services;
 
 use App\Queries\Models\User;
-use App\Shared\Jwt\JwtManager;
+use App\Shared\Jwt\JwtEncoder;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 
 final class UserQueryService
 {
-    public function __construct(private readonly JwtManager $jwtManager) {}
+    public function __construct(private readonly JwtEncoder $jwtManager) {}
 
     public function getByUserId(string $userId): ?User
     {

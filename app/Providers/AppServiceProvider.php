@@ -28,7 +28,7 @@ use App\Implementations\Commands\Models\Follow\FollowRepositoryImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByEmailImpl;
 use App\Implementations\Commands\Models\User\CheckUserExistsByUsernameImpl;
 use App\Implementations\Commands\Models\User\UserRepositoryImpl;
-use App\Shared\Jwt\JwtManager;
+use App\Shared\Jwt\JwtEncoder;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -48,8 +48,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CheckUserExistsByUsername::class, function () {
             return new CheckUserExistsByUsernameImpl();
         });
-        $this->app->singleton(JwtManager::class, function (Application $app) {
-            return new JwtManager($app['config']['app.key']);
+        $this->app->singleton(JwtEncoder::class, function (Application $app) {
+            return new JwtEncoder($app['config']['app.key']);
         });
         $this->app->singleton(ArticleRepository::class, function () {
             return new ArticleRepositoryImpl();
