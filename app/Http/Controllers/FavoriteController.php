@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Commands\Models\Favorite\ArticleNotFoundException;
@@ -29,7 +31,7 @@ final class FavoriteController extends Controller
 
         $article = $queryService->getSingleArticle($slug, $currentUserId);
         if (is_null($article)) {
-            throw new RuntimeException(sprintf('$readModel is unexpectedly set to null'));
+            throw new RuntimeException('$article is unexpectedly set to null');
         }
 
         return new JsonResponse(['article' => $article]);
@@ -51,7 +53,7 @@ final class FavoriteController extends Controller
 
         $article = $queryService->getSingleArticle($slug, $currentUserId);
         if (is_null($article)) {
-            throw new RuntimeException(sprintf('$readModel is unexpectedly set to null'));
+            throw new RuntimeException('$article is unexpectedly set to null');
         }
 
         return new JsonResponse(['article' => $article]);

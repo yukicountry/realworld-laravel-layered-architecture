@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Implementations\Commands\Models\User;
 
 use App\Commands\Models\User\User;

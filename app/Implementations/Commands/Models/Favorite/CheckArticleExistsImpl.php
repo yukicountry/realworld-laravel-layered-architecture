@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Implementations\Commands\Models\Favorite;
 
 use App\Commands\Models\Favorite\CheckArticleExists;

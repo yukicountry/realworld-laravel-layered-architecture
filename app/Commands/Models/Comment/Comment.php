@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Commands\Models\Comment;
 
 use App\Commands\Models\Article\Article;
