@@ -25,8 +25,8 @@ final class ArticleController extends Controller
             tag: $request->query('tag'),
             authorUsername: $request->query('author'),
             favoritedUsername: $request->query('favorited'),
-            limit: is_null($request->has('limit')) ? intval($request->query('limit')) : 20,
-            offset: is_null($request->has('offset')) ? intval($request->query('offset')) : 0,
+            limit: $request->has('limit') ? intval($request->query('limit')) : 20,
+            offset: $request->has('limit') ? intval($request->query('offset')) : 0,
         );
 
         return new JsonResponse([
@@ -38,8 +38,8 @@ final class ArticleController extends Controller
     {
         $articles = $queryService->feedArticles(
             $request->user(),
-            limit: is_null($request->has('limit')) ? intval($request->query('limit')) : 20,
-            offset: is_null($request->has('offset')) ? intval($request->query('offset')) : 0,
+            limit: $request->has('limit') ? intval($request->query('limit')) : 20,
+            offset: $request->has('offset') ? intval($request->query('offset')) : 0,
         );
 
         return new JsonResponse([

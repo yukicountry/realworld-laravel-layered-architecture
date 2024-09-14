@@ -145,7 +145,7 @@ final class ArticleQueryService
         $slugs = DB::table('vw_articles')
             ->select(['vw_articles.slug'])
             ->distinct()
-            ->when(isset($authorId), function (Builder $query) use ($authorUsername) {
+            ->when(isset($authorUsername), function (Builder $query) use ($authorUsername) {
                 $query->where('author_username', $authorUsername);
             })
             ->when(isset($favoritedUsername), function (Builder $query) use ($favoritedUsername) {
