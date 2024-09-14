@@ -68,16 +68,19 @@ final class Article
     {
         if (array_key_exists('title', $newAttributes)) {
             $this->title = $newAttributes['title'];
+            $this->updatedAt = CarbonImmutable::now();
         }
         if (array_key_exists('description', $newAttributes)) {
             $this->description = $newAttributes['description'];
+            $this->updatedAt = CarbonImmutable::now();
         }
         if (array_key_exists('body', $newAttributes)) {
             $this->body = htmlspecialchars($newAttributes['body']);
+            $this->updatedAt = CarbonImmutable::now();
         }
         if (array_key_exists('tagList', $newAttributes)) {
             $this->tagList = $newAttributes['tagList'];
+            $this->updatedAt = CarbonImmutable::now();
         }
-        $this->updatedAt = CarbonImmutable::now();
     }
 }

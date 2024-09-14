@@ -38,6 +38,9 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "tests/testutil.php"
+        ],
         "psr-4": {
             "Tests\\": "tests/"
         }
@@ -60,7 +63,8 @@
         ],
         "format": "./vendor/bin/php-cs-fixer fix",
         "phpstan": "./vendor/bin/phpstan analyse --memory-limit=500M",
-        "phpmd": "phpmd app text phpmd.xml"
+        "phpmd": "./vendor/bin/phpmd app text phpmd.xml",
+        "test-unit": "./vendor/bin/phpunit --testsuite Unit"
     },
     "extra": {
         "laravel": {
