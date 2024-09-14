@@ -1,8 +1,7 @@
 services:
   web:
     build:
-      context: ./docker/web/build
-      dockerfile: Dockerfile
+      dockerfile: ./docker/dev/web/build/Dockerfile
     ports:
       - 80:80
     volumes:
@@ -10,8 +9,7 @@ services:
       - php-fpm-socket-store:/var/run/php-fpm
   app:
     build:
-      context: ./docker/app/build
-      dockerfile: Dockerfile
+      dockerfile: ./docker/dev/app/build/Dockerfile
     volumes:
       - ./:/workdir
       - php-fpm-socket-store:/var/run/php-fpm
