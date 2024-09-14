@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,15 +13,15 @@ return new class extends Migration
     public function up(): void
     {
         $sql = <<<EOT
-            CREATE VIEW vw_favorites AS
-            SELECT
-                favorites.*,
-                users.username
-            FROM
-                favorites
-            JOIN
-                users ON users.id = favorites.user_id;
-        EOT;
+                CREATE VIEW vw_favorites AS
+                SELECT
+                    favorites.*,
+                    users.username
+                FROM
+                    favorites
+                JOIN
+                    users ON users.id = favorites.user_id;
+            EOT;
 
         DB::statement($sql);
     }
@@ -32,8 +32,8 @@ return new class extends Migration
     public function down(): void
     {
         $sql = <<<EOT
-            DROP VIEW IF EXISTS vw_favorites;
-        EOT;
+                DROP VIEW IF EXISTS vw_favorites;
+            EOT;
 
         DB::statement($sql);
     }

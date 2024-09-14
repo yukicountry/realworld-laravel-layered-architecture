@@ -1,12 +1,10 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Commands\Models\Follow;
 
 interface FollowRepository
 {
-    function save(Follow $follow): void;
+    public function save(Follow $follow): void;
 
-    function delete($followerId, $followeeId): void;
+    public function delete($followerId, $followeeId): void;
 }

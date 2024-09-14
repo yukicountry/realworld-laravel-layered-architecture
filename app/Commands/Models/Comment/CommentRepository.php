@@ -1,14 +1,12 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Commands\Models\Comment;
 
 interface CommentRepository
 {
-    function saveComment(Comment $comment): void;
+    public function saveComment(Comment $comment): void;
 
-    function deleteComments(array $ids): void;
+    public function deleteComments(array $ids): void;
 
-    function deleteCommentsOfArticle(string $slug): void;
+    public function deleteCommentsOfArticle(string $slug): void;
 }

@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Commands\Models\User;
 
@@ -10,7 +8,7 @@ interface UserRepository
      * Create or update the user.
      * @param User $user user to save
      */
-    function saveUser(User $user): void;
+    public function saveUser(User $user): void;
 
     /**
      * Find user by id.
@@ -18,7 +16,7 @@ interface UserRepository
      * @param string $userId user id
      * @return User|null
      */
-    function findById(string $userId): ?User;
+    public function findById(string $userId): ?User;
 
     /**
      * Find user by username.
@@ -26,7 +24,7 @@ interface UserRepository
      * @param string $username username
      * @return User|null
      */
-    function findByUsername(string $username): ?User;
+    public function findByUsername(string $username): ?User;
 
     /**
      * Find user by email.
@@ -34,5 +32,5 @@ interface UserRepository
      * @param string $email email
      * @return User|null
      */
-    function findByEmail(string $email): ?User;
+    public function findByEmail(string $email): ?User;
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         $sql = <<<EOT
-            CREATE VIEW vw_favorites_count AS
-            SELECT
-                slug,
-                COUNT(slug) AS count
-            FROM
-                favorites
-            GROUP BY
-                slug
-        EOT;
+                CREATE VIEW vw_favorites_count AS
+                SELECT
+                    slug,
+                    COUNT(slug) AS count
+                FROM
+                    favorites
+                GROUP BY
+                    slug
+            EOT;
 
         DB::statement($sql);
     }
@@ -31,8 +31,8 @@ return new class extends Migration
     public function down(): void
     {
         $sql = <<<EOT
-            DROP VIEW IF EXISTS vw_favorites_count;
-        EOT;
+                DROP VIEW IF EXISTS vw_favorites_count;
+            EOT;
 
         DB::statement($sql);
     }

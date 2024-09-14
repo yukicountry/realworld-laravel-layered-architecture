@@ -1,10 +1,8 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Commands\Models\Article;
 
 interface CheckAuthorExists
 {
-    function handle(string $authorId): bool;
+    public function handle(string $authorId): bool;
 }
