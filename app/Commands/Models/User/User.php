@@ -27,11 +27,11 @@ final class User
         string $password,
     ): self {
         if ($checkUserExistsByEmail->handle($email)) {
-            throw new EmailDuplicatedException("user of email already exists ({$email})");
+            throw new EmailDuplicatedException("Email {$email} is already taken.");
         }
 
         if ($checkUserExistsByUsername->handle($username)) {
-            throw new UsernameDuplicatedException("username already exists ({$username})");
+            throw new UsernameDuplicatedException("Username {$username} is already taken.");
         }
 
         return new self(
@@ -70,22 +70,26 @@ final class User
 
     public function update(array $newAttributes): void
     {
-        if (array_key_exists('username', $newAttributes)) {
+        if (array_key_exists('username', $newAttributes) && $newAttributes['username'] !== $this->username) {
             $this->username = $newAttributes['username'];
+            $this->updatedAt = CarbonImmutable::now();
         }
-        if (array_key_exists('email', $newAttributes)) {
+        if (array_key_exists('email', $newAttributes) && $newAttributes['email'] !== $this->email) {
             $this->email = $newAttributes['email'];
+            $this->updatedAt = CarbonImmutable::now();
         }
-        if (array_key_exists('bio', $newAttributes)) {
+        if (array_key_exists('bio', $newAttributes) && $newAttributes['bio'] !== $this->bio) {
             $this->bio = $newAttributes['bio'];
+            $this->updatedAt = CarbonImmutable::now();
         }
-        if (array_key_exists('image', $newAttributes)) {
+        if (array_key_exists('image', $newAttributes) && $newAttributes['image'] !== $this->image) {
             $this->image = $newAttributes['image'];
+            $this->updatedAt = CarbonImmutable::now();
         }
         if (array_key_exists('password', $newAttributes)) {
             $this->password = Hash::make($newAttributes['password']);
+            $this->updatedAt = CarbonImmutable::now();
         }
-        $this->updatedAt = CarbonImmutable::now();
     }
 
     public function verifyPassword(string $rawPassword): void
@@ -93,7 +97,7 @@ final class User
         $verified = Hash::check($rawPassword, $this->password);
 
         if (!$verified) {
-            throw new InvalidCredentialException("provided password is not correct");
+            throw new InvalidCredentialException("Invalid password.");
         }
     }
 }

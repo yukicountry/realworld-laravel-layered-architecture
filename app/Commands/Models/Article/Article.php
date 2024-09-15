@@ -66,19 +66,19 @@ final class Article
 
     public function update(array $newAttributes): void
     {
-        if (array_key_exists('title', $newAttributes)) {
+        if (array_key_exists('title', $newAttributes) && $newAttributes['title'] !== $this->title) {
             $this->title = $newAttributes['title'];
             $this->updatedAt = CarbonImmutable::now();
         }
-        if (array_key_exists('description', $newAttributes)) {
+        if (array_key_exists('description', $newAttributes) && $newAttributes['description'] !== $this->description) {
             $this->description = $newAttributes['description'];
             $this->updatedAt = CarbonImmutable::now();
         }
-        if (array_key_exists('body', $newAttributes)) {
+        if (array_key_exists('body', $newAttributes) && $newAttributes['body'] !== $this->body) {
             $this->body = htmlspecialchars($newAttributes['body']);
             $this->updatedAt = CarbonImmutable::now();
         }
-        if (array_key_exists('tagList', $newAttributes)) {
+        if (array_key_exists('tagList', $newAttributes) && $newAttributes['tagList'] !== $this->tagList) {
             $this->tagList = $newAttributes['tagList'];
             $this->updatedAt = CarbonImmutable::now();
         }

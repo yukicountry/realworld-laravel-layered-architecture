@@ -54,26 +54,17 @@ final class CommentQueryService
         $profiles = $this->profileQueryService->getProfiles(array_unique($authorIds), $currentUserId);
 
         return array_map(function ($commentDto) use ($profiles) {
-            $profiles = array_filter(
+            $profileOfThisArticle = array_filter(
                 $profiles,
                 fn(Profile $profile) => $profile->username === $commentDto->author_username
             );
-
-            if (count($profiles) !== 1) {
-                throw new RuntimeException(
-                    sprintf(
-                        'profiles count is different from expected value (expected: 1, actual: %d)',
-                        count($profiles),
-                    ),
-                );
-            }
 
             return new Comment(
                 $commentDto->id,
                 $commentDto->body,
                 CarbonImmutable::parse($commentDto->created_at),
                 CarbonImmutable::parse($commentDto->updated_at),
-                $profiles[0],
+                array_values($profileOfThisArticle)[0],
             );
         }, $commentDtos);
     }

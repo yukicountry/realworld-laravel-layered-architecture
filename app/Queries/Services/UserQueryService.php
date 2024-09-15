@@ -20,14 +20,11 @@ final class UserQueryService
         }
 
         return new User(
-            $dto->id,
             $dto->username,
             $dto->email,
             $this->jwtManager->encode($dto->id),
             $dto->bio,
             $dto->image,
-            CarbonImmutable::parse($dto->created_at),
-            CarbonImmutable::parse($dto->updated_at),
         );
     }
 
