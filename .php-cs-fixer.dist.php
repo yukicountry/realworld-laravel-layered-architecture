@@ -5,7 +5,6 @@ $finder = (new PhpCsFixer\Finder())
         __DIR__ . '/app',
         __DIR__ . '/bootstrap',
         __DIR__ . '/config',
-        __DIR__ . '/database/factories',
         __DIR__ . '/database/seeders',
         __DIR__ . '/routes',
         __DIR__ . '/tests',

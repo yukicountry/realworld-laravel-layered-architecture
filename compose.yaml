@@ -16,7 +16,9 @@ services:
       - ./:/workspace
       - php-fpm-socket-store:/var/run/php-fpm
   db:
-    image: postgres:16
+    build:
+      context: ./docker/dev/db/build
+      dockerfile: Dockerfile
     environment:
       POSTGRES_PASSWORD: secret
       POSTGRES_USER: devuser

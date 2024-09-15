@@ -24,6 +24,9 @@ final class CheckAuthorExistsFalseMock implements CheckAuthorExists
     }
 }
 
+/**
+ * @coversDefaultClass \App\Commands\Models\Article
+ */
 final class ArticleTest extends TestCase
 {
     public static function providerTestCreateNewArticle(): array
@@ -66,6 +69,7 @@ final class ArticleTest extends TestCase
     }
 
     /**
+     * @covers ::createNewArticle
      * @dataProvider providerTestCreateNewArticle
      */
     public function testCreateNewArticle(
@@ -180,6 +184,7 @@ final class ArticleTest extends TestCase
     }
 
     /**
+     * @covers ::update
      * @dataProvider providerTestUpdate
      */
     public function testUpdate(array $initial, array $inputs, array $expected): void
