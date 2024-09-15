@@ -61,11 +61,24 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "format": "./vendor/bin/php-cs-fixer fix",
-        "phpstan": "./vendor/bin/phpstan analyse --memory-limit=500M",
-        "phpmd": "./vendor/bin/phpmd app text phpmd.xml",
-        "test-unit": "./vendor/bin/phpunit --testsuite Unit --testdox",
-        "test-feature": "./vendor/bin/phpunit --testsuite Feature --testdox"
+        "format": [
+            "./vendor/bin/php-cs-fixer fix"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse --memory-limit=500M"
+        ],
+        "phpmd": [
+            "./vendor/bin/phpmd app text phpmd.xml"
+        ],
+        "test-unit": [
+            "./vendor/bin/phpunit --testsuite Unit --testdox"
+        ],
+        "test-feature": [
+            "./vendor/bin/phpunit --testsuite Feature --testdox"
+        ],
+        "test-all": [
+            "./vendor/bin/phpunit --testdox"
+        ]
     },
     "extra": {
         "laravel": {

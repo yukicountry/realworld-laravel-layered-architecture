@@ -1,20 +1,4 @@
 services:
-  app:
-    build:
-      context: ./docker/dev/app/build
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/workspace
-      - php-fpm-socket-store:/var/run/php-fpm
-  web:
-    build:
-      context: ./docker/dev/web/build
-      dockerfile: Dockerfile
-    ports:
-      - 80:80
-    volumes:
-      - ./:/workspace
-      - php-fpm-socket-store:/var/run/php-fpm
   db:
     build:
       context: ./docker/dev/db/build
@@ -27,6 +11,30 @@ services:
       - db-store:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    healthcheck:
+      test: psql -c "SELECT 1" devdb devuser || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+  app:
+    build:
+      context: ./docker/dev/app/build
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/workspace
+      - php-fpm-socket-store:/var/run/php-fpm
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    build:
+      context: ./docker/dev/web/build
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./:/workspace
+      - php-fpm-socket-store:/var/run/php-fpm
 volumes:
   db-store:
   php-fpm-socket-store:
