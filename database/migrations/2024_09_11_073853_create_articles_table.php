@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('slug')->primary();
             $table->string('title');
             $table->string('description');
-            $table->string('body');
+            $table->string('body', 1000);
             $table->timestamps();
             $table->string('author_id');
             $table->foreign('author_id')->references('id')->on('users')->cascadeOnUpdate()->restrictOnDelete();

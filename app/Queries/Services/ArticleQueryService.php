@@ -102,19 +102,10 @@ final class ArticleQueryService
         $profiles = $this->profileQueryService->getProfiles(array_unique($authorIds), $currentUserId);
 
         return array_map(function ($articleDto) use ($profiles, $tagDtos) {
-            $profiles = array_filter(
+            $profileOfThisArticle = array_filter(
                 $profiles,
                 fn(Profile $profile) => $profile->username === $articleDto->author_username
             );
-
-            if (count($profiles) !== 1) {
-                throw new RuntimeException(
-                    sprintf(
-                        'profiles count is different from expected value (expected: 1, actual: %d)',
-                        count($profiles),
-                    ),
-                );
-            }
 
             $tagDtosOfThisArticle = array_filter($tagDtos, fn(object $tagDto) => $tagDto->slug === $articleDto->slug);
             usort($tagDtosOfThisArticle, fn(object $lhs, object $rhs) => $lhs->sort <=> $rhs->sort);
@@ -129,7 +120,7 @@ final class ArticleQueryService
                 CarbonImmutable::parse($articleDto->updated_at),
                 $articleDto->favorited,
                 $articleDto->favorites_count,
-                $profiles[0],
+                array_values($profileOfThisArticle)[0],
             );
         }, $articleDtos);
     }
