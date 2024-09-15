@@ -1,17 +1,19 @@
 services:
+  app:
+    build:
+      context: ./docker/dev/app/build
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/workspace
+      - php-fpm-socket-store:/var/run/php-fpm
   web:
     build:
-      dockerfile: ./docker/dev/web/build/Dockerfile
+      context: ./docker/dev/web/build
+      dockerfile: Dockerfile
     ports:
       - 80:80
     volumes:
-      - ./:/workdir
-      - php-fpm-socket-store:/var/run/php-fpm
-  app:
-    build:
-      dockerfile: ./docker/dev/app/build/Dockerfile
-    volumes:
-      - ./:/workdir
+      - ./:/workspace
       - php-fpm-socket-store:/var/run/php-fpm
   db:
     image: postgres:16
