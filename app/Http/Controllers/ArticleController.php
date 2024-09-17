@@ -20,8 +20,8 @@ final class ArticleController extends Controller
 {
     public function listArticles(ArticleQueryService $queryService, ListArticlesRequest $request): JsonResponse
     {
-        $articles = $queryService->searchArticles(
-            null, // TODO: authentication
+        [$articles, $count] = $queryService->searchArticles(
+            $request->user(),
             tag: $request->query('tag'),
             authorUsername: $request->query('author'),
             favoritedUsername: $request->query('favorited'),
@@ -30,20 +30,22 @@ final class ArticleController extends Controller
         );
 
         return new JsonResponse([
-            'articles' => $articles,
+            'articles'      => $articles,
+            'articlesCount' => $count,
         ]);
     }
 
     public function feedArticles(ArticleQueryService $queryService, FeedArticlesRequest $request): JsonResponse
     {
-        $articles = $queryService->feedArticles(
+        [$articles, $count] = $queryService->feedArticles(
             $request->user(),
             limit: $request->has('limit') ? intval($request->query('limit')) : 20,
             offset: $request->has('offset') ? intval($request->query('offset')) : 0,
         );
 
         return new JsonResponse([
-            'articles' => $articles,
+            'articles'      => $articles,
+            'articlesCount' => $count,
         ]);
     }
 

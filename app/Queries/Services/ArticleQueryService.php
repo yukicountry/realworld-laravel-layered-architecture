@@ -157,7 +157,7 @@ final class ArticleQueryService
             ->pluck('slug')
             ->toArray();
 
-        return $this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset);
+        return [$this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset), count($slugs)];
     }
 
     public function feedArticles(
@@ -177,7 +177,7 @@ final class ArticleQueryService
             ->pluck('slug')
             ->toArray();
 
-        return $this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset);
+        return [$this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset), count($slugs)];
     }
 
     public function getAllTags(): array

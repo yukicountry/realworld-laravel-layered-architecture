@@ -1,0 +1,53 @@
+name: Run tests
+
+on:
+  push:
+    paths-ignore:
+      - '!**.md'
+  pull_request:
+    paths-ignore:
+      - '!**.md'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: compose up
+        run: docker compose up -d app db
+
+      - name: composer install
+        run: docker compose exec app composer install
+
+      - name: run unit tests
+        run: docker compose exec app composer run-script test-unit
+
+      - name: run feature tests
+        run: docker compose exec app composer run-script test-feature
+
+  e2etest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: copy env
+        run: cp .env.example .env
+
+      - name: build
+        run: docker compose build --build-arg PUID=$(id -u) --build-arg PGID=$(id -g) app
+
+      - name: compose up
+        run: docker compose up -d
+
+      - name: composer install
+        run: docker compose exec app composer install
+
+      - name: generate app key
+        run: docker compose exec app php artisan key:generate
+
+      - name: db migration
+        run: docker compose exec app php artisan migrate
+
+      - name: run e2e tests
+        run: APIURL=http://localhost/api ./api/run-api-tests.sh
