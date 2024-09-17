@@ -8,7 +8,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\AuthenticateAndGuard;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
+
+Route::get('health', fn() => new Response('OK'));
 
 Route::prefix('articles')->group(function () {
     Route::get('', [ArticleController::class, 'listArticles'])->middleware(Authenticate::class);

@@ -12,14 +12,17 @@ services:
     ports:
       - 5432:5432
     healthcheck:
-      test: psql -c "SELECT 1" devdb devuser || exit 1
-      interval: 10s
-      timeout: 5s
+      test: pg_isready -d devdb -U devuser || exit 1
+      interval: 5s
+      timeout: 3s
       retries: 10
   app:
     build:
       context: ./docker/dev/app/build
       dockerfile: Dockerfile
+      args:
+        - PUID=${PUID:-1000}
+        - PGID=${PGID:-1000}
     volumes:
       - ./:/workspace
       - php-fpm-socket-store:/var/run/php-fpm

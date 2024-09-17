@@ -14,20 +14,27 @@ This app is aimed to show an example of simple layered architecture by utilizing
 ### Local trial
 
 ```bash
+# copy env
+cp .env.example .env
+
+# build
+docker compose build --build-arg PUID=$(id -u) --build-arg PGID=$(id -g) app
+
 # start
 docker compose up -d
 
-# copy env
-docker compose exec app bash cp .env.example .env
-
 # install dependencies
-docker compose exec app bash composer install
+docker compose exec app composer install
 
 # generate app key
-docker compose exec app key:generate
+docker compose exec app php artisan key:generate
 
 # db migration and seeding
-docker compose exec app bash php artisan migrate --seed
+docker compose exec app php artisan migrate --seed
+
+# health check
+curl localhost/api/health
+# => OK
 ```
 
 ### Demo app

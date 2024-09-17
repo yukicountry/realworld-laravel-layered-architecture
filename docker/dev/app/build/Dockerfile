@@ -3,7 +3,7 @@ FROM php:8.2-fpm
 WORKDIR /tmp
 
 RUN apt update && \
-    apt install -y libpq-dev zip unzip && \
+    apt install -y zip unzip libpq-dev && \
     # install php extensions
     docker-php-ext-install bcmath pdo_pgsql && \
     # install composer
@@ -15,5 +15,10 @@ RUN apt update && \
 
 COPY ./zzz-www.conf /usr/local/etc/php-fpm.d/zzz-www.conf
 COPY ./zzz-php.ini /usr/local/etc/php/conf.d/zzz-php.ini
+
+ARG PUID=1000
+ARG PGID=1000
+RUN groupmod -g $PGID www-data && \
+    usermod -u $PUID -g www-data www-data
 
 WORKDIR /workspace
