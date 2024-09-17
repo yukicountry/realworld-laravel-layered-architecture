@@ -40,6 +40,9 @@ final class CommentQueryService
         );
     }
 
+    /**
+     * @return array<Comment>
+     */
     public function getCommentsOfArticle(string $slug, ?string $currentUserId): array
     {
         $commentDtos = DB::table('comments')

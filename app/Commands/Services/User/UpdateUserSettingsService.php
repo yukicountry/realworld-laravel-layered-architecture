@@ -10,6 +10,9 @@ final class UpdateUserSettingsService
 {
     public function __construct(private readonly UserRepository $userRepository) {}
 
+    /**
+     * @param array{'username'?: string, 'email'?: string, 'bio'?: string|null, 'image'?: string|null, 'password'?: string} $newAttributes
+     */
     public function handle(string $userId, array $newAttributes): User
     {
         $user = $this->userRepository->findById($userId);

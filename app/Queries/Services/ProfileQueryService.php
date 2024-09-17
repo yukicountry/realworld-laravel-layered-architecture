@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 final class ProfileQueryService
 {
+    /**
+     * @param array<string> $userIds
+     * @return array<Profile>
+     */
     public function getProfiles(array $userIds, ?string $currentUserId): array
     {
         $dtos = DB::table('users')

@@ -15,6 +15,9 @@ final class CommentRepositoryImpl implements CommentRepository
         DB::table('comments')->upsert($dto, 'id');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function mapToDto(Comment $model): array
     {
         return [

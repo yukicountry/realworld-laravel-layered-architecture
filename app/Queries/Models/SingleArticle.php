@@ -6,6 +6,9 @@ use Carbon\CarbonImmutable;
 
 final class SingleArticle
 {
+    /**
+     * @param array<string> $tagList
+     */
     public function __construct(
         public readonly string $slug,
         public readonly string $title,

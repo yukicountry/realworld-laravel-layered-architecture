@@ -6,5 +6,5 @@ interface FollowRepository
 {
     public function save(Follow $follow): void;
 
-    public function delete($followerId, $followeeId): void;
+    public function delete(string $followerId, string $followeeId): void;
 }

@@ -25,6 +25,9 @@ final class FavoriteRepositoryImpl implements FavoriteRepository
         DB::table('favorites')->where('slug', $slug)->delete();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function mapToDto(Favorite $model): array
     {
         return [

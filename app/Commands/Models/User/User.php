@@ -68,6 +68,9 @@ final class User
         );
     }
 
+    /**
+     * @param array{'username'?: string, 'email'?: string, 'bio'?: string|null, 'image'?: string|null, 'password'?: string} $newAttributes
+     */
     public function update(array $newAttributes): void
     {
         if (array_key_exists('username', $newAttributes) && $newAttributes['username'] !== $this->username) {

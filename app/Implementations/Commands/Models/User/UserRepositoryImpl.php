@@ -51,6 +51,9 @@ final class UserRepositoryImpl implements UserRepository
         return $this->mapToModel($dto);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function mapToDto(User $model): array
     {
         return [

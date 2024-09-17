@@ -7,6 +7,9 @@ use Ramsey\Uuid\Uuid;
 
 final class Article
 {
+    /**
+     * @param array<string> $tagList
+     */
     private function __construct(
         public readonly string $slug,
         public string $title,
@@ -18,6 +21,9 @@ final class Article
         public readonly string $authorId,
     ) {}
 
+    /**
+     * @param array<string> $tagList
+     */
     public static function createNewArticle(
         CheckAuthorExists $checkAuthorExists,
         string $title,
@@ -42,6 +48,9 @@ final class Article
         );
     }
 
+    /**
+     * @param array<string> $tagList
+     */
     public static function reconstruct(
         string $slug,
         string $title,
@@ -64,6 +73,9 @@ final class Article
         );
     }
 
+    /**
+     * @param array{'title'?: string, 'description'?: string, 'body'?: string, 'tagList'?: array<string>} $newAttributes
+     */
     public function update(array $newAttributes): void
     {
         if (array_key_exists('title', $newAttributes) && $newAttributes['title'] !== $this->title) {

@@ -17,6 +17,7 @@ final class PostArticleService
     /**
      * Create and save new article.
      *
+     * @param array{'title': string, 'description': string, 'body': string, 'tagList': array<string>} $input
      * @throws AuthorNotFoundException
      */
     public function handle(string $authorId, array $input): Article

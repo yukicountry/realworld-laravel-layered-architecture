@@ -10,6 +10,9 @@ final class UpdateArticleService
 {
     public function __construct(private readonly ArticleRepository $articleRepository) {}
 
+    /**
+     * @param array{'title'?: string, 'description'?: string, 'body'?: string, 'tagList'?: array<string>} $newAttributes
+     */
     public function handle(string $slug, array $newAttributes): Article
     {
         $article = $this->articleRepository->findArticleBySlug($slug);

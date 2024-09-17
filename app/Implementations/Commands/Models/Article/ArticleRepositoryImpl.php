@@ -33,6 +33,9 @@ final class ArticleRepositoryImpl implements ArticleRepository
         return $this->mapToModel($articleDto, $tagDtos);
     }
 
+    /**
+     * @return array{array<string, mixed>, array<array<string, mixed>>}
+     */
     private function mapToDto(Article $article): array
     {
         $articleDto = [
@@ -59,6 +62,9 @@ final class ArticleRepositoryImpl implements ArticleRepository
         return [$articleDto, $tagDtos];
     }
 
+    /**
+     * @param array<object> $tagDtos
+     */
     private function mapToModel(object $articleDto, array $tagDtos): Article
     {
         $tags = array_map(fn($dto) => $dto->name, $tagDtos);

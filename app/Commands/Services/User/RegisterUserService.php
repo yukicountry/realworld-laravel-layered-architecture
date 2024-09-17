@@ -15,6 +15,9 @@ final class RegisterUserService
         private readonly CheckUserExistsByUsername $checkUserExistsByUsername,
     ) {}
 
+    /**
+     * @param array{'username': string, 'email': string, 'password': string} $input
+     */
     public function handle(array $input): User
     {
         $user = User::createNewUser(

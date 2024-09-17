@@ -3,11 +3,9 @@ includes:
 parameters:
     paths:
         - app/
-    level: 4
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
-#
+    excludePaths:
+        - *Test.php
+    level: 6
+    ignoreErrors:
+        - '/Parameter #\d \$[A-Za-z]* of method [A-Za-z:\(\)\\]* expects string(\|null)?, App\\Models\\User(\|null)? given\.$/'
 #    checkMissingIterableValueType: false

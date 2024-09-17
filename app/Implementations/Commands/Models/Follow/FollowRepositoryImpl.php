@@ -15,11 +15,14 @@ final class FollowRepositoryImpl implements FollowRepository
         DB::table('follows')->upsert($dto, ['follower_id', 'followee_id']);
     }
 
-    public function delete($followerId, $followeeId): void
+    public function delete(string $followerId, string $followeeId): void
     {
         DB::table('follows')->where('follower_id', $followerId)->where('followee_id', $followeeId)->delete();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function mapToDto(Follow $model): array
     {
         return [

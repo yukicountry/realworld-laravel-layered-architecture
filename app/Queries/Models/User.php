@@ -2,8 +2,6 @@
 
 namespace App\Queries\Models;
 
-use Carbon\CarbonImmutable;
-
 final class User
 {
     public function __construct(

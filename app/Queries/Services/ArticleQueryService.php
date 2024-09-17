@@ -66,6 +66,10 @@ final class ArticleQueryService
         );
     }
 
+    /**
+     * @param array<string> $slugs
+     * @return array<ArticleForList>
+     */
     public function getArticleListBySlugs(
         array $slugs,
         ?string $currentUserId,
@@ -125,6 +129,9 @@ final class ArticleQueryService
         }, $articleDtos);
     }
 
+    /**
+     * @return array{array<ArticleForList>, int}
+     */
     public function searchArticles(
         ?string $currentUserId,
         ?string $tag = null,
@@ -160,6 +167,9 @@ final class ArticleQueryService
         return [$this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset), count($slugs)];
     }
 
+    /**
+     * @return array{array<ArticleForList>, int}
+     */
     public function feedArticles(
         string $currentUserId,
         int $limit = 20,
@@ -180,6 +190,9 @@ final class ArticleQueryService
         return [$this->getArticleListBySlugs($slugs, $currentUserId, $limit, $offset), count($slugs)];
     }
 
+    /**
+     * @return array<string>
+     */
     public function getAllTags(): array
     {
         return DB::table('tags')
