@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-use App\Commands\Models\Article\Article;
-use App\Commands\Models\Article\AuthorNotFoundException;
-use App\Commands\Models\Article\CheckAuthorExists;
+namespace App\Commands\Models\Article;
+
 use Carbon\CarbonImmutable;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 use function Tests\invokePrivateConstructor;
