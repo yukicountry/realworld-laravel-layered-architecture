@@ -1,6 +1,6 @@
 # Laravel + Simple Layered Architecture implementation of RealWorld app
 
-[![phpunit workflow](https://github.com/yukicountry/realworld-laravel-layered-architecture/actions/workflows/phpunit.yaml/badge.svg)](https://github.com/yukicountry/realworld-laravel-layered-architecture/actions?query=branch%3Amain)
+[![phpunit workflow](https://github.com/yukicountry/realworld-laravel-layered-architecture/actions/workflows/run-tests.yaml/badge.svg)](https://github.com/yukicountry/realworld-laravel-layered-architecture/actions/workflows/run-tests.yaml?query=branch%3Amain)
 [![License: MIT](https://img.shields.io/badge/License-MIT-cornflowerblue.svg)](https://opensource.org/licenses/MIT)
 
 ## 💎Overview
@@ -36,6 +36,8 @@ docker compose exec app php artisan migrate --seed
 curl localhost/api/health
 # => OK
 ```
+
+Endpoint list: <https://main--realworld-docs.netlify.app/specifications/backend/endpoints/>
 
 ### Demo app
 
@@ -80,26 +82,11 @@ The general responsibilities of Eloquent models are divided into some other modu
 
 Each modules have only single responsibility and they are easy to test!!🎉
 
-### Tests
-
-There are some sample unit and feature tests.
-
-#### `app/Commands/Models/Article/ArticleTest.php`
-
-sample tests for pure PHP class
-
-#### `app/Queries/Services/ArticleQueryServiceTest.php`
-
-sample tests for classes that needs to interact with external system or services (in this case, database)
-
-#### `tests/Feature/RegistrationApiTest.php`
-
-feature test sample
-
 ### Directory structure
 
 ```plaintext
 .
+├── api                    # api schema and e2e test script (provided officially)
 ├── app
 │   ├── Auth               # authorization modules
 │   ├── Commands
@@ -113,14 +100,33 @@ feature test sample
 │   │   └── Services       # read usecases
 │   └── Shared             # shared basic modules
 ├── bootstrap
-├── conf                   # deployment files for Render.com
+├── conf                   # deployment resources for Render.com
 ├── config
 ├── database
-├── docker                 # files to build docker images
+├── docker                 # Dockerfile etc.
 ├── docs                   # documents and related images
 ├── public
 ├── routes
-├── scripts                # deployment files for Render.com
+├── scripts                # deployment resources for Render.com
 ├── storage
 └── tests
 ```
+
+## 🧪Tests
+
+```bash
+# run unit test
+docker compose exec app composer run-script test-unit
+
+# run feature test
+docker compose exec app composer run-script test-feature
+
+# run E2E test (node.js required)
+APIURL=http://localhost/api ./api/run-api-tests.sh
+```
+
+|File|Description|
+|----|----|
+|`app/Commands/Models/Article/ArticleTest.php`|sample tests for pure PHP class|
+|`app/Queries/Services/ArticleQueryServiceTest.php`|sample tests for classes that needs to interact with external system or services (in this case, database)|
+|`tests/Feature/RegistrationApiTest.php`|feature test sample|
