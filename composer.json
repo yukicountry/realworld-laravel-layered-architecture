@@ -23,7 +23,6 @@
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
-        "phpmd/phpmd": "^2.15",
         "phpunit/phpunit": "^11.0.1"
     },
     "autoload": {
@@ -66,9 +65,6 @@
         ],
         "phpstan": [
             "./vendor/bin/phpstan analyse --memory-limit=500M"
-        ],
-        "phpmd": [
-            "./vendor/bin/phpmd app text phpmd.xml"
         ],
         "test-unit": [
             "./vendor/bin/phpunit --testsuite Unit --testdox"

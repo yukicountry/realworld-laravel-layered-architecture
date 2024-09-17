@@ -13,7 +13,6 @@
 .php-cs-fixer.dist.php
 .phpunit.result.cache
 compose.yaml
-phpmd.xml
 phpstan.neon.dist
 phpunit.xml
 Homestead.json
