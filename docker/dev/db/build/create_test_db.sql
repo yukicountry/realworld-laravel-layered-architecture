@@ -1,1 +1,1 @@
-CREATE TABLE testdb;
+CREATE DATABASE testdb;
