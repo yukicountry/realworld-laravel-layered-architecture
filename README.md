@@ -96,14 +96,12 @@ Each modules have only single responsibility and they are easy to test!!🎉
 │   │   └── Services       # read usecases
 │   └── Shared             # shared basic modules
 ├── bootstrap
-├── conf                   # deployment resources for Render.com
 ├── config
 ├── database
 ├── docker                 # Dockerfile etc.
 ├── docs                   # documents and related images
 ├── public
 ├── routes
-├── scripts                # deployment resources for Render.com
 ├── storage
 └── tests
 ```
