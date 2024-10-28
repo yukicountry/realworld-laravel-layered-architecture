@@ -123,4 +123,4 @@ APIURL=http://localhost/api ./api/run-api-tests.sh
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `app/Commands/Models/Article/ArticleTest.php`      | sample tests for pure PHP class                                                                           |
 | `app/Queries/Services/ArticleQueryServiceTest.php` | sample tests for classes that needs to interact with external system or services (in this case, database) |
-| `tests/Feature/RegistrationApiTest.php`            | feature test sample                                                                                       |
+| `tests/Feature/RegistrationApiTest.php`            | sample feature tests                                                                                      |
