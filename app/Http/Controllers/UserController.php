@@ -39,9 +39,9 @@ final class UserController extends Controller
                 'user' => $readModel,
             ]);
         } catch (EmailDuplicatedException $ex) {
-            throw ValidationException::withMessages(['email' => $ex->getMessage()]);
+            throw ValidationException::withMessages(['user.email' => $ex->getMessage()]);
         } catch (UsernameDuplicatedException $ex) {
-            throw ValidationException::withMessages(['username' => $ex->getMessage()]);
+            throw ValidationException::withMessages(['user.username' => $ex->getMessage()]);
         }
     }
 
