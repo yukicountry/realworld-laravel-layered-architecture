@@ -14,10 +14,10 @@ use App\Http\Requests\UpdateUserSettingsRequest;
 use App\Queries\Services\UserQueryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use RuntimeException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 final class UserController extends Controller
 {
@@ -38,8 +38,10 @@ final class UserController extends Controller
             return new JsonResponse([
                 'user' => $readModel,
             ]);
-        } catch (EmailDuplicatedException | UsernameDuplicatedException $ex) {
-            throw new UnprocessableEntityHttpException($ex->getMessage());
+        } catch (EmailDuplicatedException $ex) {
+            throw ValidationException::withMessages(['email' => $ex->getMessage()]);
+        } catch (UsernameDuplicatedException $ex) {
+            throw ValidationException::withMessages(['username' => $ex->getMessage()]);
         }
     }
 
